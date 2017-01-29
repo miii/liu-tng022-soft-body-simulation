@@ -5,7 +5,7 @@
 
 ### Requirements
 
-This projects depend on:
+This projects depends on:
 
 * [CMake](http://www.cmake.org/install/)
 * OpenGL
