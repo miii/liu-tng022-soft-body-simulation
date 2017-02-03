@@ -4,7 +4,7 @@ close all
 m = 2; % mass 
 k = 20; % spring
 d = 0.4; % damper
-r = 0.5; % rest length
+r = 0.5; % rest lenght
 
 h = 0.01; % step size
 samp = 2000;
@@ -18,12 +18,14 @@ v(1,2) = 0;
 
 for i=1:samp
     
-    absx = abs(x(i,1)-x(i,2));
-
+%     absx = abs(x(i,1)-x(i,2));
+%     
+%     xab1 = (x(i,1)-x(i,2))/absx;
     
-    [xab1, xab2] = create_direction(x, i, 1, 2);
+    [xab1, xab2] = create_direction(x(i,1), x(i,2));
     f1 = -(k*( absx - r)*xab1 + d*(v(i,1)-v(i,2)));
-
+    
+%     xab2 = (x(i,2)-x(i,1))/absx;
     f2 = -(k*( absx - r)*xab2 + d*(v(i,2)-v(i,1)));
 
     
