@@ -32,14 +32,22 @@ for i=1:samp
 
     
     %Euler
-    v(i+1,1) = v(i,1) + h*f1/m; 
-    x(i+1,1) = x(i,1) + h*v(i+1,1); 
     
-    v(i+1,2) = v(i,2) + h*f2/m;
-    x(i+1,2) = x(i,2) + h*v(i+1,2);
     
-    v(i+1,3) = v(i,3) + h*f3/m;
-    x(i+1,3) = x(i,3) + h*v(i+1,3);
+    
+    
+
+     [x,v]=Euler(i,1,m,h,f1,v,x);
+     %v(i+1,1) = v(i,1) + h*f1/m; 
+     %x(i+1,1) = x(i,1) + h*v(i+1,1); 
+     
+     [x,v]=Euler(i,2,m,h,f2,v,x);
+     %v(i+1,2) = v(i,2) + h*f2/m;
+     %x(i+1,2) = x(i,2) + h*v(i+1,2);
+    
+     [x,v]=Euler(i,3,m,h,f3,v,x); 
+     %v(i+1,3) = v(i,3) + h*f3/m;
+     %x(i+1,3) = x(i,3) + h*v(i+1,3);
     
     
     
