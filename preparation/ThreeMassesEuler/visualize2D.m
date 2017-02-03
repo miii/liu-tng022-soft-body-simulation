@@ -1,15 +1,20 @@
-function visualize2D(x, y, xlimit, ylimit)
+function visualize2D(x, y, xlimit, ylimit, interval)
 %   Visualize a MSD system with multiple masses in a plot
 %   x: Mass position in the x dimension
 %   y: Mass position in the y dimension
 %   xlimit: Plot limits in the x dimension
 %   ylimit: Plot limits in the y dimension
+%   interval: Pause time between every frame (default: 0.01)
     
     [m n] = size(x);
     colors = ['k', 'm', 'b' 'r', 'g', 'c', 'y'];
     
     if y == 0
         y = zeros(m, n);
+    end
+    
+    if nargin < 5
+        interval = 0.01;
     end
     
     fig = figure;
@@ -28,10 +33,8 @@ function visualize2D(x, y, xlimit, ylimit)
             
             xlim(xlimit)
             ylim(ylimit)
-            
-            pause(0.001)
-            
         end
+        pause(interval)
     end
     
 end
