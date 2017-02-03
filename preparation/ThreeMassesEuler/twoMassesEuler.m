@@ -12,26 +12,36 @@ samp = 2000;
 % initial state
 x(1,1) = -1;
 x(1,2) = 0;
+x(1,3) = 1;
 v(1,1) = 0;
 v(1,2) = 0;
+v(1,3) = 0;
 
 
 for i=1:samp
     
-    absx = abs(x(i,1)-x(i,2));
-
+    absx12 = abs(x(i,1)-x(i,2));
+    absx23 = abs(x(i,2)-x(i,3));
+    x12 = create_direction(x, i, 1, 2);
+    x23 = create_direction(x, i, 2, 3);
     
-    [xab1, xab2] = create_direction(x, i, 1, 2);
-    f1 = -(k*( absx - r)*xab1 + d*(v(i,1)-v(i,2)));
-
-    f2 = -(k*( absx - r)*xab2 + d*(v(i,2)-v(i,1)));
+    f1 = -(k*( absx12 - r)*x12 + d*(v(i,1)-v(i,2)));
+    f2 = -f1 -(k*( absx23 - r)*x23 + d*(v(i,2)-v(i,3)));
+    f3 = k*( absx23 - r)*x23 + d*(v(i,2)-v(i,3));v(i+1,2) = v(i,2) + h*f2/m;
+    x(i+1,2) = x(i,2) + h*v(i+1,2);
 
     
     %Euler
     v(i+1,1) = v(i,1) + h*f1/m; 
     x(i+1,1) = x(i,1) + h*v(i+1,1); 
+    
     v(i+1,2) = v(i,2) + h*f2/m;
     x(i+1,2) = x(i,2) + h*v(i+1,2);
+    
+    v(i+1,3) = v(i,3) + h*f3/m;
+    x(i+1,3) = x(i,3) + h*v(i+1,3);
+    
+    
     
 end
 figure(1);
