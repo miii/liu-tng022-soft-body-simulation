@@ -11,7 +11,7 @@ samp = 2000;
 
 % initial state
 x(1,1) = -1;
-x(1,2) = 0;
+x(1,2) = 0.05;
 x(1,3) = 1;
 v(1,1) = 0;
 v(1,2) = 0;
@@ -44,6 +44,9 @@ for i=1:samp
     
     
 end
-figure(1);
-plot(x)
+
+visualize2D(x, 0, [-1 1], [-1 1]);
+
+%figure(1);
+%plot(x)
 

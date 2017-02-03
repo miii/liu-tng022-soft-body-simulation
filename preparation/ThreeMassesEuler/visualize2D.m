@@ -1,4 +1,4 @@
-function visualize(x, y, xlimit, ylimit)
+function visualize2D(x, y, xlimit, ylimit)
 %   Visualize a MSD system with multiple masses in a plot
 %   x: Mass position in the x dimension
 %   y: Mass position in the y dimension
@@ -6,7 +6,7 @@ function visualize(x, y, xlimit, ylimit)
 %   ylimit: Plot limits in the y dimension
     
     [m n] = size(x);
-    colors = ['k', 'm', 'c' 'r', 'g', 'b', 'w', 'y'];
+    colors = ['k', 'm', 'b' 'r', 'g', 'c', 'y'];
     
     if y == 0
         y = zeros(m, n);
