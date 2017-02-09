@@ -1,12 +1,17 @@
 function [ x, v ] = create_MSD( x, v, samples, n, m, k, d, r, h )
-% The function creates the values of vectors x and v using Euler
-% approximation
+% The function creates the values of vectors x and v using Euler approximation
 % The function uses two other functions: abs_val and direction
 % 
 % Parameter explanation:
-% x = displacement, v = velocity, samples = number of samples, n = number
-% of masses, m = mass, k = spring constants, d = damper constant, r = rest
-% length of the spring, h = step length for Euler approximation
+% x = displacement
+% v = velocity
+% samples = number of samples
+% n = number of masses
+% m = mass
+% k = spring constants
+% d = damper constant
+% r = rest length of the spring
+% h = step length for Euler approximation
 
 
 % n has to be greater than 2
@@ -27,6 +32,7 @@ else
         dir = direction(x, i, n);
 
         % Calculate the force for each mass
+        
         f(1) = -(k*(abs_v(1)-r)*dir(1) + d*(v(i,1)-v(i,2)));
         for z=2:n-1
             f(z) = k*(abs_v(z-1)-r)*dir(z-1) + d*(v(i,z-1)-v(i,z)) -(k*(abs_v(z)-r)*dir(z) + d*(v(i,z)-v(i,z+1)));
