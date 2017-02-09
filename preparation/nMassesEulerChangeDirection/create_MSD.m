@@ -43,6 +43,7 @@ else
             if ((abs_v(z) < min) || (abs_v(z) > max) || (abs_v(z-1) < min) ||  (abs_v(z-1) > max))
                 v(i,z) = 0;
                 v(i,z-1) = 0;
+                v(i, z+1) = 0;
             end
             fk(z) = k*(abs_v(z-1)-r)*dir(z-1) - k*(abs_v(z)-r)*dir(z);
             fd(z) = d*(v(i,z-1)-v(i,z)) - d*(v(i,z)-v(i,z+1));
