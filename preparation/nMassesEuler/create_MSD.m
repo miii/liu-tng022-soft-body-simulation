@@ -33,11 +33,14 @@ else
 
         % Calculate the force for each mass
         
-        f(1) = -(k*(abs_v(1)-r)*dir(1) + d*(v(i,1)-v(i,2)));
+        f(1) = -1 * calcMSDForce(1, k, d, i, v, r, abs_v, dir);
+        % f(1) = -(k*(abs_v(1)-r)*dir(1) + d*(v(i,1)-v(i,2)));
         for z=2:n-1
-            f(z) = k*(abs_v(z-1)-r)*dir(z-1) + d*(v(i,z-1)-v(i,z)) -(k*(abs_v(z)-r)*dir(z) + d*(v(i,z)-v(i,z+1)));
+            f(z) = calcMSDForce(z-1, k, d, i, v, r, abs_v, dir) - calcMSDForce(z, k, d, i, v, r, abs_v, dir);
+            %f(z) = k*(abs_v(z-1)-r)*dir(z-1) + d*(v(i,z-1)-v(i,z)) -(k*(abs_v(z)-r)*dir(z) + d*(v(i,z)-v(i,z+1)));
         end
-        f(n) = k*(abs_v(n-1)-r)*dir(n-1) + d*(v(i,n-1)-v(i,n));
+        %f(n) = k*(abs_v(n-1)-r)*dir(n-1) + d*(v(i,n-1)-v(i,n));
+        f(n) = calcMSDForce(n-1, k, d, i, v, r, abs_v, dir);
 
         % Euler approximation
         v(i+1,1:n) = v(i,1:n) + h*f(1:n)/m;
