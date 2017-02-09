@@ -5,7 +5,7 @@ close all
 m = 2; % mass 
 k = 20; % spring constant
 d = 0.4; % damper constant
-r = 0.5; % rest length
+r = 0.1; % rest length
 
 h = 0.01; % step size
 samples = 2000;
@@ -19,3 +19,5 @@ v(1,1:n) = [0 0 0 0 0];
 
 figure(1);
 plot(x)
+
+% visualize2D(x, 0, [-2 2], [-1 1]);
