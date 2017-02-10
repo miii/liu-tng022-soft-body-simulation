@@ -10,7 +10,7 @@ function [force] = calcMSDForce(z, k, d, i, v, r, abs_v, dir)
 %   abs_v = vector containing the absolute value of two adjacent
 %   dir = vector containing the direction between two adjacent
     
-    spring = k*(abs_v(z)-r)*dir(1);
+    spring = k*(abs_v(z)-r)*dir(z);
     damper = d*(v(i,1)-v(i,2));
     
     force = spring + damper;
