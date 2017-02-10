@@ -8,7 +8,7 @@ d = 0.4; % damper constant
 r = 0.5; % rest length
 
 h = 0.01; % step size
-samples = 2000;
+samples = 20 / h;
 
 n = 3; % number of masses
 % initial state
@@ -20,4 +20,4 @@ v(1,1:n) = [0 0 0];
 figure(1);
 plot(x)
 
-%visualize2D(x, 0, [-1 1], [-1 1])
+%visualize2D(x, 0)

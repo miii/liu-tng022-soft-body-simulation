@@ -43,6 +43,7 @@ else
         f(n) = calcMSDForce(n-1, k, d, i, v, r, abs_v, dir);
 
         % Euler approximation
+        v(i,1:n) = motion(v(i,1:n), x(i,1:n), r);
         v(i+1,1:n) = v(i,1:n) + h*f(1:n)/m;
         x(i+1,1:n) = x(i,1:n) + h*v(i+1,1:n);
 
