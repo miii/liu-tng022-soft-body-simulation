@@ -1,6 +1,7 @@
 function [fp1, fp2] = calcMSDForce2D(j, p, v, ks, kd, r)
 %[fp1, fp2] = calcMSDForce2D(j, p, v, ks, kd, r)
 %   Calculate MSD forces for x and y components
+%
 %   fp1 is a 1x2 vector with x and y force for mass 1
 %   fp2 is a 1x2 vector with x and y force for mass 2
 %   

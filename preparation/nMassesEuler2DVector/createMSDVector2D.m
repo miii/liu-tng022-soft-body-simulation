@@ -1,5 +1,5 @@
 function [outpos, outvel] = createMSDVector2D(masses, velocity, mass, ks, kd, r, h, samples)
-%[xpos, ypos] = createMSDVector2D(masses, velocity, mass, k, d, r, h, samples)
+%[outpos, outvel] = createMSDVector2D(masses, velocity, mass, k, d, r, h, samples)
 %   Simulates a 2D mass-spring-damper system using vectors.
 %
 %   outpos contains simulated positions of all masses
