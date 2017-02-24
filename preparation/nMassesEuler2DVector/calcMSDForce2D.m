@@ -40,6 +40,11 @@ function [fp1, fp2] = calcMSDForce2D(j, p, v, ks, kd, r)
     % If division by zero above
     dir(isnan(dir)) = 0;
     
+    % For proper angles since atan will not take direction into consideration
+    if dx < 0
+       angle = angle + pi; 
+    end
+    
     % Calculate force for both components (x and y)
     fp1(1) = fspring * cos(angle) + fdamper * dir(1);
     fp1(2) = fspring * sin(angle) + fdamper * dir(2);

@@ -1,4 +1,4 @@
-function visualize2D(x, y, interval)
+function visualize2D(x, y, interval, lim)
 %   Visualize a MSD system with multiple masses in a plot
 %   Last updated: 090217
 %
@@ -18,18 +18,23 @@ function visualize2D(x, y, interval)
         y = zeros(m, n);
     end
     
-    % If no x-axis data is available, set default limits
-    if x == 0
-       xlimit = [-1 1];
+    if nargin < 4
+        % If no x-axis data is available, set default limits
+        if x == 0
+           xlimit = [-1 1];
+        else
+           xlimit = [min(x(:)) max(x(:))];
+        end
+        
+        % If no y-axis data is available, set default limits
+        if y == 0
+           ylimit = [-1 1];
+        else
+           ylimit = [min(y(:)) max(y(:))];
+        end
     else
-       xlimit = [min(x(:)) max(x(:))];
-    end
-    
-    % If no y-axis data is available, set default limits
-    if y == 0
-       ylimit = [-1 1];
-    else
-       ylimit = [min(y(:)) max(y(:))];
+        xlimit = lim;
+        ylimit = lim;
     end
     
     figure;
