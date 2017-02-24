@@ -40,13 +40,24 @@ function [outpos, outvel] = createMSDVector2D(masses, velocity, mass, ks, kd, r,
             rsvel1 = reshape(outvel((i - 1), j, :), [1 2]);
             rsvel2 = reshape(outvel((i - 1), (j + 1), :), [1 2]);
             
-            % Euler for velocity
-            vel1 = rsvel1 + h * fp1 / m;
-            vel2 = rsvel2 + h * fp2 / m;
-            
             % Get current position of both masses
             rspos1 = reshape(outpos((i - 1), j, :), [1 2]);
             rspos2 = reshape(outpos((i - 1), (j + 1), :), [1 2]);
+            
+            % Check if the mass is already moved by another spring in the same frame
+            % If yes, use the current velocity and position instead of last sample
+            [n nn nnn] = size(outvel);
+            if n == i
+                cvel1 = reshape(outvel(i, j, :), [1 2]);
+                cpos1 = reshape(outpos(i, j, :), [1 2]);
+                
+                rsvel1 = cvel1;
+                rspos1 = cpos1;
+            end
+            
+            % Euler for velocity
+            vel1 = rsvel1 + h * fp1 / m;
+            vel2 = rsvel2 + h * fp2 / m;
             
             % Euler for position
             pos1 = rspos1 + h * vel1;
