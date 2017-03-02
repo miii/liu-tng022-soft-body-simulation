@@ -6,6 +6,11 @@
 #include <iostream>
 #include <typeinfo>
 
+Cube::Cube(){
+
+    genrateCube(5,5,5);
+
+}
 
 void Cube::genrateCube(int x, int y, int z){
 
@@ -16,7 +21,7 @@ void Cube::genrateCube(int x, int y, int z){
     int ypos = 0;
     int zpos = 0;
 
-        float abs = 0.2;
+        float abs = 0.4;
     for (int i = 0; i < numMass ; ++i) {
 
         std::cout << xpos << ", " << ypos <<  ", " << zpos << std::endl;
@@ -44,18 +49,18 @@ void Cube::genrateCube(int x, int y, int z){
 
         if ((j + 1) % x == 0) {
             massVec[j].xCon = j - 1;
-            massVec[j].conections.push_back(j - 1);
-            std::cout << j - 1 << ", ";
+            massVec[j].connections.push_back(j - 1);
+            std::cout << "x: "<<j - 1 << ", ";
 
         } else if (j % x == 0) {
             massVec[j].xCon2 = j + 1;
-            massVec[j].conections.push_back(j + 1);
-            std::cout << j + 1 << ", ";
+            massVec[j].connections.push_back(j + 1);
+            std::cout <<"x: " <<j + 1 << ", ";
         } else {
             massVec[j].xCon = j - 1;
             massVec[j].xCon2 = j + 1;
-            massVec[j].conections.push_back(j - 1);
-            massVec[j].conections.push_back(j + 1);
+            massVec[j].connections.push_back(j - 1);
+            massVec[j].connections.push_back(j + 1);
             std::cout << "X(" << j - 1 << ", ";
             std::cout << j + 1 << "), ";
         }
@@ -63,52 +68,55 @@ void Cube::genrateCube(int x, int y, int z){
 
         if (((j - numXY * (j / numXY)) / x) == 0) {
             massVec[j].yCon2 = j + x;
-            massVec[j].conections.push_back(j + x);
+            massVec[j].connections.push_back(j + x);
             std::cout << massVec[j].yCon2 << ", " << std::endl;
         } else if (((j - numXY * (j / numXY)) / x) == y - 1) {
             massVec[j].yCon = j - x;
-            massVec[j].conections.push_back(j - x);
+            massVec[j].connections.push_back(j - x);
             std::cout << massVec[j].yCon << ", " << std::endl;
         } else {
             massVec[j].yCon = j - x;
             massVec[j].yCon2 = j + x;
-            massVec[j].conections.push_back(j - x);
-            massVec[j].conections.push_back(j + x);
+            massVec[j].connections.push_back(j - x);
+            massVec[j].connections.push_back(j + x);
             std::cout << "y( " << massVec[j].yCon << ", " << massVec[j].yCon2 << "), " << std::endl;
         }
         if (z > 1) {
 
-            if (((j - numXY * (j / numXY)) / numXY) == 0) {
+            std::cout << "j: " << j << " numXY: " << numXY << " j / numXY: " << j / numXY <<   " val: " << ((j - numXY * (j / numXY)) / numXY) << std::endl;
+
+            if ((((j / numXY)) ) == 0) {
                 massVec[j].zCon2 = j + numXY;
-                massVec[j].conections.push_back(j + numXY);
+                massVec[j].connections.push_back(j + numXY);
                 //std::cout << j-numXY << " x"<< std::endl ;
                 std::cout << massVec[j].zCon2 << " " << std::endl;
+                std::cout << "z1" << std::endl;
 
-            } else if (((j - numXY * (j / numXY)) / numXY) == z - 1) {
+            } else if (( (j / numXY))  == z - 1) {
                 massVec[j].zCon = j - numXY;
-                massVec[j].conections.push_back(j - numXY);
+                massVec[j].connections.push_back(j - numXY);
                 //std::cout << j+numXY << std::endl ;
                 std::cout << massVec[j].zCon << ", " << std::endl;
+                std::cout << "z2" << std::endl;
+
 
             } else {
                 massVec[j].zCon = j - x;
                 massVec[j].zCon2 = j + x;
-                massVec[j].conections.push_back(j - x);
-                massVec[j].conections.push_back(j + x);
+                massVec[j].connections.push_back(j - numXY);
+                massVec[j].connections.push_back(j + numXY);
                 std::cout << "z( " << massVec[j].zCon << ", " << massVec[j].zCon2 << ")" << std::endl;
             }
         }
+
+        std::cout << "conections: " <<  massVec[j].connections.size() << std::endl;
 
     }
 
 }
 
 
-Cube::Cube(){
 
-    genrateCube(3,3,1);
-
-}
 
 
 
@@ -200,16 +208,14 @@ void Cube::draw()
         //std::cout << conx2 << " x2"<< std::endl;
         //std::cout << conx << " x"<< std::endl;
         //  std::cout << i << " : ";
-        for (int j = 0; j < massVec[i].conections.size(); ++j) {
-            con = massVec[i].conections[j];
+        for (int j = 0; j < massVec[i].connections.size(); ++j) {
+            con = massVec[i].connections[j];
             if (con > i ) {
                 glVertex3f(x, y, z);
                 glVertex3f(massVec[con].getPosition().x, massVec[con].getPosition().y, massVec[con].getPosition().z);
                 count++;
             }
         }
-
-
 
 
 
