@@ -25,6 +25,7 @@ public:
     int yCon2 = -1;
     int zCon = -1;
     int zCon2 = -1;
+    std::vector<int> conections;
 
     int xyzCon;
 

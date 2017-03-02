@@ -37,21 +37,15 @@ int Mass::getxCon() {
 int Mass::getxCon2() {
     return xCon2;
 }
-
-
-
 int Mass::getyCon2() {
     return yCon2;
 }
-
 int Mass::getyCon() {
     return yCon;
 }
-
 int Mass::getzCon() {
     return zCon;
 }
-
 int Mass::getzCon2() {
     return zCon2;
 }
