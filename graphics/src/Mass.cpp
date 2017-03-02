@@ -50,4 +50,21 @@ int Mass::getzCon2() {
     return zCon2;
 }
 
+glm::vec3 Mass::getPreviousPosition() {
+    return ppos;
+}
+
+glm::vec3 Mass::getPreviousVelocity() {
+    return pvelocity;
+}
+
+void Mass::setPreviousPosition( glm::vec3 pos) {
+    ppos=pos;
+
+}
+
+void Mass::setPreviousVelocity(glm::vec3 vel) {
+    pvelocity=vel;
+}
+
 

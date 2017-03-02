@@ -10,6 +10,8 @@
 #include <vector>
 #include "Mass.h"
 
+
+
 class Cube {
 
 private:
@@ -29,10 +31,11 @@ public:
 
     float k; // Spring
     float d; // Damper
+    float r; // Rest length of spring
 
     Cube();
 
-    void setConstans(float _k, float _d);
+    void setConstans(float _k, float _d, float _r);
     std::vector<Mass> massVec;
     glm::vec3 Fource[8];
 

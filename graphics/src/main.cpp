@@ -39,7 +39,7 @@ static void error_callback(int error, const char* description);
 int main(void)
 {
 
-    cube1.setConstans(200, 40); //Jelly
+    cube1.setConstans(200, 40, 0.1);
 
 
     GLFWwindow* window;

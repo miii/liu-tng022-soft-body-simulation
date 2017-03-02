@@ -6,9 +6,11 @@
 #include <iostream>
 #include <typeinfo>
 
+#define PI 3.14159265358979323846  /* pi */
+
 Cube::Cube(){
 
-    genrateCube(5,5,5);
+    genrateCube(2,1,1);
 
 }
 
@@ -21,7 +23,9 @@ void Cube::genrateCube(int x, int y, int z){
     int ypos = 0;
     int zpos = 0;
 
-        float abs = 0.4;
+
+        float abs = 0.3;
+
     for (int i = 0; i < numMass ; ++i) {
 
         std::cout << xpos << ", " << ypos <<  ", " << zpos << std::endl;
@@ -43,61 +47,65 @@ void Cube::genrateCube(int x, int y, int z){
 
     std::cout << std::endl;
 
-    for (int j = 0; j < massVec.size(); ++j) {
 
-        std::cout << j << ": ";
+        for (int j = 0; j < massVec.size(); ++j) {
 
-        if ((j + 1) % x == 0) {
-            massVec[j].xCon = j - 1;
-            massVec[j].connections.push_back(j - 1);
-            std::cout << "x: "<<j - 1 << ", ";
+            std::cout << j << ": ";
+            if(x > 1) {
+            if ((j + 1) % x == 0) {
+                massVec[j].xCon = j - 1;
+                massVec[j].connections.push_back(j - 1);
+                std::cout << "x: " << j - 1 << ", ";
 
-        } else if (j % x == 0) {
-            massVec[j].xCon2 = j + 1;
-            massVec[j].connections.push_back(j + 1);
-            std::cout <<"x: " <<j + 1 << ", ";
-        } else {
-            massVec[j].xCon = j - 1;
-            massVec[j].xCon2 = j + 1;
-            massVec[j].connections.push_back(j - 1);
-            massVec[j].connections.push_back(j + 1);
-            std::cout << "X(" << j - 1 << ", ";
-            std::cout << j + 1 << "), ";
+            } else if (j % x == 0) {
+                massVec[j].xCon2 = j + 1;
+                massVec[j].connections.push_back(j + 1);
+                std::cout << "x: " << j + 1 << ", ";
+            } else {
+                massVec[j].xCon = j - 1;
+                massVec[j].xCon2 = j + 1;
+                massVec[j].connections.push_back(j - 1);
+                massVec[j].connections.push_back(j + 1);
+                std::cout << "X(" << j - 1 << ", ";
+                std::cout << j + 1 << "), ";
+            }
         }
 
 
-        if (((j - numXY * (j / numXY)) / x) == 0) {
-            massVec[j].yCon2 = j + x;
-            massVec[j].connections.push_back(j + x);
-            std::cout << massVec[j].yCon2 << ", " << std::endl;
-        } else if (((j - numXY * (j / numXY)) / x) == y - 1) {
-            massVec[j].yCon = j - x;
-            massVec[j].connections.push_back(j - x);
-            std::cout << massVec[j].yCon << ", " << std::endl;
-        } else {
-            massVec[j].yCon = j - x;
-            massVec[j].yCon2 = j + x;
-            massVec[j].connections.push_back(j - x);
-            massVec[j].connections.push_back(j + x);
-            std::cout << "y( " << massVec[j].yCon << ", " << massVec[j].yCon2 << "), " << std::endl;
-        }
+if (y > 1) {
+    if (((j - numXY * (j / numXY)) / x) == 0) {
+        massVec[j].yCon2 = j + x;
+        massVec[j].connections.push_back(j + x);
+        std::cout << massVec[j].yCon2 << ", ";
+    } else if (((j - numXY * (j / numXY)) / x) == y - 1) {
+        massVec[j].yCon = j - x;
+        massVec[j].connections.push_back(j - x);
+        std::cout << massVec[j].yCon << ", " ;
+    } else {
+        massVec[j].yCon = j - x;
+        massVec[j].yCon2 = j + x;
+        massVec[j].connections.push_back(j - x);
+        massVec[j].connections.push_back(j + x);
+        std::cout << "y( " << massVec[j].yCon << ", " << massVec[j].yCon2 << "), " ;
+    }
+}
         if (z > 1) {
 
-            std::cout << "j: " << j << " numXY: " << numXY << " j / numXY: " << j / numXY <<   " val: " << ((j - numXY * (j / numXY)) / numXY) << std::endl;
+            //std::cout << "j: " << j << " numXY: " << numXY << " j / numXY: " << j / numXY <<   " val: " << ((j - numXY * (j / numXY)) / numXY) << std::endl;
 
             if ((((j / numXY)) ) == 0) {
                 massVec[j].zCon2 = j + numXY;
                 massVec[j].connections.push_back(j + numXY);
                 //std::cout << j-numXY << " x"<< std::endl ;
                 std::cout << massVec[j].zCon2 << " " << std::endl;
-                std::cout << "z1" << std::endl;
+                //std::cout << "z1" << std::endl;
 
             } else if (( (j / numXY))  == z - 1) {
                 massVec[j].zCon = j - numXY;
                 massVec[j].connections.push_back(j - numXY);
                 //std::cout << j+numXY << std::endl ;
                 std::cout << massVec[j].zCon << ", " << std::endl;
-                std::cout << "z2" << std::endl;
+                //std::cout << "z2" << std::endl;
 
 
             } else {
@@ -109,7 +117,7 @@ void Cube::genrateCube(int x, int y, int z){
             }
         }
 
-        std::cout << "conections: " <<  massVec[j].connections.size() << std::endl;
+        //std::cout << "conections: " <<  massVec[j].connections.size() << std::endl;
 
     }
 
@@ -137,32 +145,104 @@ glm::vec3 massZVel2;
 
 void Cube::updateEuler(){
 
-    glm::vec3 massXPos;
-    glm::vec3 massYPos;
-    glm::vec3 massZPos;
+    glm::vec3 posision1;
+    glm::vec3 posision2;
+    glm::vec3 velocity1;
+    glm::vec3 velocity2;
+    float dx;
+    float dy;
+    float angle;
+    float euclDist;
+    float euclVel;
+    float fspring;
+    float fdamper;
+    glm::vec3 dir = glm::vec3(0.0f, 0.0f,0.0f);
+    glm::vec3 fp1 = glm::vec3(0.0f, 0.0f,0.0f);
+    glm::vec3 fp2 = glm::vec3(0.0f, 0.0f,0.0f);
+
 
     for (int i=0; i<massVec.size(); i++) {
 
+        //get mass position and velocity
+        posision1 = massVec[i].getPosition();
+        velocity1 = massVec[i].getVelocity();
 
 
+        for (int j = 0; j < massVec[i].connections.size() ; ++j) {
+
+            // Get conected mass's position and velocity
+            posision2 = massVec[j].getPosition();
+            velocity2 = massVec[j].getVelocity();
+            dx = posision2.x - posision1.x;
+            dy = posision2.y - posision1.y;
+            if (dx != 0) {
+                angle = glm::atan(dy / dx);
+            }
+            euclDist = glm::sqrt( glm::pow(posision1.x-posision2.x,2) + glm::pow(posision1.y-posision2.y,2) );
+            euclVel = glm::sqrt( glm::pow(velocity1.x-velocity2.x,2) + glm::pow(velocity1.y-velocity2.y,2) );
+
+            fspring = k * (euclDist - r);
+            fdamper = d * euclVel;
+
+            glm::vec3 v1 =velocity2 - velocity1;
+            glm::vec3 v2 = glm::abs(velocity2 - velocity1);
+
+            dir.x = (velocity2.x - velocity1.x) / glm::abs(velocity2.x - velocity1.x);
+            dir.y = (velocity2.y - velocity1.y) / glm::abs(velocity2.y - velocity1.y);
+            dir.z = (velocity2.z - velocity1.z) / glm::abs(velocity2.z - velocity1.z);
+
+
+            if ( dir.x != -1 || dir.x != 0 || dir.x != 1 ){
+                dir.x = 0;
+            }
+            if ( dir.y != -1 || dir.y != 0 || dir.y != 1 ){
+                dir.y = 0;
+            }
+            if ( dir.z != -1 || dir.z != 0 || dir.z != 1 ){
+                dir.z = 0;
+            }
+
+
+            if (dx < 0) {
+                angle = angle + PI ;
+            }
+
+            fp1.x = fspring * glm::cos(angle) + fdamper * dir.x;
+            fp1.y = fspring * glm::sin(angle) + fdamper * dir.y;
+
+            fp2 = - fp1;
+
+           /*
+            std::cout << "dx: " << dx << std::endl;
+            std::cout << "dy: " << dy << std::endl;
+            std::cout << "angle: " << angle << std::endl;
+            std::cout << "euclDist: " << euclDist << std::endl;
+            std::cout << "euclVel: " << euclVel << std::endl;
+            std::cout << "fspring: " << fspring << std::endl;
+            std::cout << "fdamper: " << fdamper << std::endl;
+            std::cout << "dir: ( " << dir.x << ", " << dir.y << ", " << dir.z << ")" << std::endl;
+            std::cout << "fp1: ( " << fp1.x << ", " << fp1.y << ", " << fp1.z << ")" << std::endl;
+            std::cout << "fp2: ( " << fp2.x << ", " << fp2.y << ", " << fp2.z << ")" << std::endl;
+            std::cout << std::endl;
+*/
+
+            massVec[i].setVelocity(massVec[i].getPreviousVelocity() + h * fp1 / m) ; // TODO:: FIX
+            massVec[j].setVelocity(massVec[j].getPreviousVelocity() + h * fp2 / m) ; // TODO:: FIX
+
+            massVec[i].setPosition(massVec[i].getPreviousPosition() + h * velocity1) ; // TODO:: FIX
+            massVec[j].setPosition(massVec[j].getPreviousPosition() + h * velocity2) ; // TODO:: FIX
+
+
+
+
+
+
+
+        }
 
 
     }
-
-
-
-    for (int i=0; i<massVec.size(); i++){
-       // massVec[i].setVelocity(massVec[i].getVelocity()+Fource[i]*h/m);
-       // massVec[i].setPosition(massVec[i].getPosition()+massVec[i].getVelocity()*h);
-
-    }
-
-
-
-
-
-
-   }
+}
 
     /*
 
@@ -293,7 +373,9 @@ glm::vec3 Cube::getCenter(){
     return avgPos;
 }
 
-void Cube::setConstans(float _k, float _d) {
-        k=_k;
-        d=_d;
+void Cube::setConstans(float _k, float _d, float _r) {
+    k = _k;
+    d = _d;
+    r = _r;
+
 }
