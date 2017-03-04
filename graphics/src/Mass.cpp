@@ -67,4 +67,8 @@ void Mass::setPreviousVelocity(glm::vec3 vel) {
     pvelocity=vel;
 }
 
+void Mass::connect(int massIndex) {
+    connections.push_back(massIndex);
+}
+
 

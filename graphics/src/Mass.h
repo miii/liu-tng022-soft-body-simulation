@@ -35,6 +35,8 @@ public:
     Mass(glm::vec3 _pos, glm::vec3 initVel);
 
 
+    void connect(int massIndex);
+
     void setPosition(glm::vec3);
     glm::vec3 getPosition();
     glm::vec3 getPreviousPosition();

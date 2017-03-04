@@ -39,7 +39,7 @@ static void error_callback(int error, const char* description);
 int main(void)
 {
 
-    cube1.setConstans(200, 40, 0.1);
+    cube1.setConstans(8, 2 , 0.8);
 
 
     GLFWwindow* window;
@@ -48,7 +48,7 @@ int main(void)
     if (!glfwInit())
         exit(EXIT_FAILURE);
 
-    window = glfwCreateWindow(640, 480, "Simple example", NULL, NULL);
+    window = glfwCreateWindow(640, 480, "Soft", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -103,9 +103,8 @@ int main(void)
 
 
         gluLookAt(0.0f, 0.5f, 3.0f,
-                  (cube1.getCenter().x)/2-0.5, 0.0f, (cube1.getCenter().z)/2,
+                  0.0f, 0.0f, 0.0f,
                   0.0f, 1.0f, 0.0f);
-
 
 
 

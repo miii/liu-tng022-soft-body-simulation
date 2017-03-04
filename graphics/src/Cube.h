@@ -17,8 +17,8 @@ class Cube {
 private:
 
     //Spring values
-    float m = 1.0f;
-    float h = 0.005f;
+    float m = 2.0f;
+    float h = 0.009f;
 
     glm::vec3 g=glm::vec3(0.0f, 9.82f, 0.0f);
     glm::vec3 sXlenght = glm::vec3(0.9f, 0.0f,0.0f);
@@ -43,7 +43,7 @@ public:
     void updateEuler();
     glm::vec3 getCenter();
 
-    void genrateCube(int x, int y, int z);
+    void generateCube(int x, int y, int z);
 };
 
 

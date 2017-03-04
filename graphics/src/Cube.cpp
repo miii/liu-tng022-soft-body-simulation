@@ -10,11 +10,11 @@
 
 Cube::Cube(){
 
-    genrateCube(2,1,1);
+    generateCube(2, 2, 1);
 
 }
 
-void Cube::genrateCube(int x, int y, int z){
+void Cube::generateCube(int x, int y, int z){
 
     int numMass = x*y*z;
     int numXY = x*y;
@@ -24,7 +24,7 @@ void Cube::genrateCube(int x, int y, int z){
     int zpos = 0;
 
 
-        float abs = 0.3;
+        float abs = 1;
 
     for (int i = 0; i < numMass ; ++i) {
 
@@ -121,6 +121,12 @@ if (y > 1) {
 
     }
 
+    //TODO :: remove later
+    massVec[0].connect(3);
+    massVec[1].connect(2);
+    massVec[2].connect(1);
+    massVec[3].connect(0);
+
 }
 
 
@@ -166,6 +172,10 @@ void Cube::updateEuler(){
         //get mass position and velocity
         posision1 = massVec[i].getPosition();
         velocity1 = massVec[i].getVelocity();
+        // TODO:: så här?
+        massVec[i].setPreviousPosition(posision1);
+        massVec[i].setPreviousVelocity(velocity1);
+
 
 
         for (int j = 0; j < massVec[i].connections.size() ; ++j) {
@@ -173,6 +183,9 @@ void Cube::updateEuler(){
             // Get conected mass's position and velocity
             posision2 = massVec[j].getPosition();
             velocity2 = massVec[j].getVelocity();
+            // TODO:: så här?
+            //massVec[j].setPreviousPosition(posision2);
+            //massVec[j].setPreviousVelocity(velocity2);
             dx = posision2.x - posision1.x;
             dy = posision2.y - posision1.y;
             if (dx != 0) {
@@ -225,13 +238,20 @@ void Cube::updateEuler(){
             std::cout << "fp2: ( " << fp2.x << ", " << fp2.y << ", " << fp2.z << ")" << std::endl;
             std::cout << std::endl;
 */
+            //TODO :: need to set PreviousVelocity & PreviousPosition somewhere
 
+            std::cout << "pos: " << "( "<< massVec[i].getPreviousVelocity().x << ", " << massVec[i].getPreviousVelocity().y << ", " << massVec[i].getPreviousVelocity().z << " )" << std::endl;
+            if(dx < r/2 || dy <r/2){
+                massVec[i].setVelocity(-massVec[i].getPreviousVelocity() + h * fp1 / m) ; // TODO:: FIX
+            }
             massVec[i].setVelocity(massVec[i].getPreviousVelocity() + h * fp1 / m) ; // TODO:: FIX
-            massVec[j].setVelocity(massVec[j].getPreviousVelocity() + h * fp2 / m) ; // TODO:: FIX
+            //massVec[j].setVelocity(massVec[j].getPreviousVelocity() + h * fp2 / m) ; // TODO:: FIX
 
             massVec[i].setPosition(massVec[i].getPreviousPosition() + h * velocity1) ; // TODO:: FIX
-            massVec[j].setPosition(massVec[j].getPreviousPosition() + h * velocity2) ; // TODO:: FIX
+            //massVec[j].setPosition(massVec[j].getPreviousPosition() + h * velocity2) ; // TODO:: FIX
 
+
+            //std::cout << "pos: " << "( "<< massVec[i].getPosition().x << ", " << massVec[i].getPosition().y << ", " << massVec[i].getPosition().z << " )" << std::endl;
 
 
 
@@ -239,6 +259,10 @@ void Cube::updateEuler(){
 
 
         }
+
+
+
+
 
 
     }
@@ -265,7 +289,7 @@ void Cube::draw()
 {
     int count = 0;
     // set the line width
-    glLineWidth(4.0);
+    glLineWidth(8.0);
 
     // Call only once for all remaining points
     glBegin(GL_LINES);
