@@ -13,7 +13,7 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
 
 set(SOURCE_FILES
-src/main.cpp src/Cube.cpp src/Cube.h src/Mass.cpp src/Mass.h)
+src/main.cpp src/Cube.cpp src/Cube.h src/Mass.cpp src/Mass.h src/Functions.cpp src/Functions.h)
 
 add_executable(${APP_NAME} ${SOURCE_FILES} src/Cube.cpp src/Cube.h)
 

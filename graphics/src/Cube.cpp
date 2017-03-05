@@ -18,7 +18,7 @@ void Cube::generateCube(int x, int y, int z){
 
     int numMass = x*y*z;
     int numXY = x*y;
-    std::cout << numMass << std::endl;
+    std::cout << std::endl << "Number of Masses: " << numMass << std::endl;
     int xpos = 0;
     int ypos = 0;
     int zpos = 0;
@@ -28,7 +28,7 @@ void Cube::generateCube(int x, int y, int z){
 
     for (int i = 0; i < numMass ; ++i) {
 
-        std::cout << xpos << ", " << ypos <<  ", " << zpos << std::endl;
+        std::cout << "Mass " << i << " : " << xpos << ", " << ypos <<  ", " << zpos << std::endl;
 
         massVec.push_back(Mass(glm::vec3(xpos*abs,ypos*abs,zpos*abs), glm::vec3(0,0,0))); // BACK-BOT-LEFT
         xpos++;
@@ -45,7 +45,7 @@ void Cube::generateCube(int x, int y, int z){
 
     }
 
-    std::cout << std::endl;
+    std::cout << std::endl << "Conections:" << std::endl;
 
 
         for (int j = 0; j < massVec.size(); ++j) {
@@ -116,6 +116,7 @@ if (y > 1) {
                 std::cout << "z( " << massVec[j].zCon << ", " << massVec[j].zCon2 << ")" << std::endl;
             }
         }
+            std::cout << std::endl;
 
         //std::cout << "conections: " <<  massVec[j].connections.size() << std::endl;
 
@@ -240,7 +241,7 @@ void Cube::updateEuler(){
 */
             //TODO :: need to set PreviousVelocity & PreviousPosition somewhere
 
-            std::cout << "pos: " << "( "<< massVec[i].getPreviousVelocity().x << ", " << massVec[i].getPreviousVelocity().y << ", " << massVec[i].getPreviousVelocity().z << " )" << std::endl;
+            //std::cout << "pos: " << "( "<< massVec[i].getPreviousVelocity().x << ", " << massVec[i].getPreviousVelocity().y << ", " << massVec[i].getPreviousVelocity().z << " )" << std::endl;
             if(dx < r/2 || dy <r/2){
                 massVec[i].setVelocity(-massVec[i].getPreviousVelocity() + h * fp1 / m) ; // TODO:: FIX
             }
@@ -251,7 +252,7 @@ void Cube::updateEuler(){
             //massVec[j].setPosition(massVec[j].getPreviousPosition() + h * velocity2) ; // TODO:: FIX
 
 
-            //std::cout << "pos: " << "( "<< massVec[i].getPosition().x << ", " << massVec[i].getPosition().y << ", " << massVec[i].getPosition().z << " )" << std::endl;
+            std::cout << "Mass " << i << " pos: " << "( "<< massVec[i].getPosition().x << ", " << massVec[i].getPosition().y << ", " << massVec[i].getPosition().z << " )" << std::endl;
 
 
 
