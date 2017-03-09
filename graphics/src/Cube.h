@@ -18,13 +18,16 @@ private:
 
     //Spring values
     float m = 2.0f;
-    float h = 0.009f;
+    float h = 0.0001f;
 
-    glm::vec3 g=glm::vec3(0.0f, 9.82f, 0.0f);
+    glm::vec3 gravity=glm::vec3(0.0f, -9.82f, 0.0f);
     glm::vec3 sXlenght = glm::vec3(0.9f, 0.0f,0.0f);
     glm::vec3 sYlenght = glm::vec3(0.0f, 0.9f,0.0f);
     glm::vec3 sZlenght = glm::vec3(0.0f, 0.0f,0.9f);
-    glm::vec3 sXYZlenght = glm::vec3(0.9f, .9f,0.9f);
+    glm::vec3 sXYZlenght = glm::vec3(0.9f, 0.9f,0.9f);
+
+
+
 
 
 public:
@@ -44,6 +47,8 @@ public:
     glm::vec3 getCenter();
 
     void generateCube(int x, int y, int z);
+
+    glm::vec3 calcForce(Mass m1, Mass m2);
 };
 
 

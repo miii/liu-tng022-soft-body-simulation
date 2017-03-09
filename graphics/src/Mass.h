@@ -12,9 +12,9 @@
 class Mass {
 
 private:
-    glm::vec3 pos;
+    glm::vec3 pos = glm::vec3(0,0,0);;
     glm::vec3 ppos;
-    glm::vec3 velocity;
+    glm::vec3 velocity = glm::vec3(0,0,0);
     glm::vec3 pvelocity;
 
 

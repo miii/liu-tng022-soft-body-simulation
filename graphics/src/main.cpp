@@ -74,7 +74,8 @@ int main(void)
     printf("Desktop size:    %d x %d pixels\n", vidmode->width, vidmode->height);
 
     Cube cube1 = Cube();
-    cube1.setConstans(8, 2 , 1.0);
+    //cube1.massVec[1].setPosition(glm::vec3(1.2f, -0.2f, 0.0f));
+    cube1.setConstans(200, 10 , 1.4);
     //glClearColor(0.6, 0.9, 1.0, 1.0);
     glLoadIdentity();
 
@@ -82,7 +83,7 @@ int main(void)
     //glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
 
 
-    glfwSwapInterval(0); // 0 or 1
+    glfwSwapInterval(1); // 0 or 1
 
 
 
