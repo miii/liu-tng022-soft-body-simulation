@@ -75,7 +75,7 @@ int main(void)
 
     Cube cube1 = Cube();
     //cube1.massVec[1].setPosition(glm::vec3(1.2f, -0.2f, 0.0f));
-    cube1.setConstans(200, 10 , 1.4);
+    cube1.setConstans(200, 20 , 0.8);
     //glClearColor(0.6, 0.9, 1.0, 1.0);
     glLoadIdentity();
 
@@ -83,7 +83,7 @@ int main(void)
     //glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
 
 
-    glfwSwapInterval(1); // 0 or 1
+    glfwSwapInterval(0); // 0 or 1
 
 
 
@@ -146,9 +146,8 @@ int main(void)
 
 
         //glPushMatrix();
-        glColor3f(0.5f, 0.5f, 0.5f);
+        glColor3f(1.0f, 0.5f, 0.5f);
         glPushMatrix();
-        //glTranslatef(-1.4f, 0, -0.5f);
         cube1.draw();
         cube1.updateEuler();
 
