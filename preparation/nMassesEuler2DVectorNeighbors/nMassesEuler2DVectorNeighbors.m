@@ -3,9 +3,9 @@ clear all
 close all
 
 m = 2; % mass 
-k = 40; % spring constant
+k = 50; % spring constant
 d = 2; % damper constant
-r = 0.8; % rest length
+r = 0.9; % rest length
 h = 0.01; % step size
 samples = 1000;
 
