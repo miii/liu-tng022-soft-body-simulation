@@ -6,10 +6,12 @@ function [ x, v ] = create_MSD( x, v, samples, n, m, k, d, r, h )
 % Parameter explanation:
 % x = displacement, v = velocity, samples = number of samples, n = number
 % of masses, m = mass, k = spring constants, d = damper constant, r = rest
-% length of the spring, h = step length for Euler approximation
+% length of the spring, h = step size for Euler approximation
 
-min = 0.15;
-max = 1;
+% Physical restrictions of the spring:
+% Max and min length of the spring
+min = 0.1*r;
+max = 2*r;
 % n has to be greater than 2
 if n<3
     disp('n has to be greater than 2')
@@ -29,31 +31,34 @@ else
         % values in vector x
         dir = direction(x, i, n);
 
-        % Calculate the force for each mass
+        % Take physical restricions into account
         if ((abs_v(1) < min) || (abs_v(1) > max))
 
             v(i,1) = 0;
             v(i,2) = 0;
         end
+        % Calculate the force for each mass
         fk(1) = -k*(abs_v(1)-r)*dir(1);
         fd(1) = -d*(v(i,1)-v(i,2));
         f(1) = fk(1) + fd(1);
         for z=2:n-1
-            
+            % Take physical restricions into account
             if ((abs_v(z) < min) || (abs_v(z) > max) || (abs_v(z-1) < min) ||  (abs_v(z-1) > max))
                 v(i,z) = 0;
                 v(i,z-1) = 0;
                 v(i, z+1) = 0;
             end
+            % Calculate the force for each mass
             fk(z) = k*(abs_v(z-1)-r)*dir(z-1) - k*(abs_v(z)-r)*dir(z);
             fd(z) = d*(v(i,z-1)-v(i,z)) - d*(v(i,z)-v(i,z+1));
             f(z) = fk(z) + fd(z);
         end
-        
+        % Take physical restricions into account
         if ((abs_v(n-1) < min) || (abs_v(n-1) > max))
             v(i,n-1) = 0;
             v(i,n) = 0;
         end
+        % Calculate the force for each mass
         fk(n) = k*(abs_v(n-1)-r)*dir(n-1);
         fd(n) = d*(v(i,n-1)-v(i,n));
         f(n) = fk(n) + fd(n);
