@@ -27,6 +27,7 @@ glm::vec3 Mass::getVelocity(){
 // mass constructor
 Mass::Mass(glm::vec3 _pos, glm::vec3 initVel) {
     pos = _pos;
+    initialPosition = _pos;
 
     initialVelocity=initVel;
     velocity=initialVelocity;
@@ -36,6 +37,10 @@ Mass::Mass(glm::vec3 _pos, glm::vec3 initVel) {
 // connects mass
 void Mass::connect(int massIndex) {
     connections.push_back(massIndex);
+}
+
+glm::vec3 Mass::getinitialPosition() {
+    return initialPosition;
 }
 
 

@@ -17,6 +17,9 @@ private:
     // velocity of mass
     glm::vec3 velocity = glm::vec3(0,0,0);
 
+    glm::vec3 initialPosition;
+
+
 
 
 public:
@@ -45,6 +48,7 @@ public:
     // gets the Velocity of the masses
     glm::vec3 getVelocity();
 
+    glm::vec3 getinitialPosition();
 };
 
 

@@ -60,7 +60,7 @@ int main(void)
     printf("Desktop size:    %d x %d pixels\n", vidmode->width, vidmode->height);
 
     Cube cube1 = Cube();
-    cube1.setConstants(80, 0.4, 1.2); // sets value
+    cube1.setConstants(100, 2, 0.5); // sets value
     glLoadIdentity();
 
 
@@ -102,7 +102,7 @@ int main(void)
 
         glFrustum(-ratio, ratio, -1.0f, 1.0f, 1, 50);
 
-        gluLookAt(1.0f, 2.0f, 3.0f,
+        gluLookAt(3.0f, 1.0f, 4.0f,
                   0.0f, 0.0f, 0.0f,
                   0.0f, 1.0f, 0.0f);
 

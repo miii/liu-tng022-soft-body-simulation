@@ -9,7 +9,7 @@
 
 Cube::Cube(){
 
-    generateCube(2, 2, 2);
+    generateCube(4, 4, 4);
 
 }
 
@@ -23,7 +23,6 @@ void Cube::generateCube(int x, int y, int z){
     int zpos = 0;
 
 
-    float di = 1.0; // Start distance between masses
 
     // Generate masses and puts them in vector
     for (int i = 0; i < numMass ; ++i) {
@@ -45,8 +44,22 @@ void Cube::generateCube(int x, int y, int z){
 
     }
 
+
     std::cout << std::endl << "Conections:" << std::endl;
 
+    for (int j = 0; j < massVec.size(); ++j) {
+        std::cout << "mass" << j << ": " ;
+        for (int i = 0; i < massVec.size() ; ++i) {
+            if(distance3D(massVec[j], massVec[i]) <= std::sqrt(di*di*2)+di/10 && j!= i){
+                massVec[j].connect(i);
+                std::cout << i << ", ";
+            }
+        }
+        std::cout << std::endl;
+
+
+    }
+/*
     // creat connection in X, Y and Z if other conections are needed, creat them manually with mass.connect(int)
         for (int j = 0; j < massVec.size(); ++j) {
             std::cout << j << ": ";
@@ -100,47 +113,8 @@ if (y > 1) {
             std::cout << std::endl;
 
         }
+*/
 
-
-    //TODO :: remove later
-
-    // manual diagonal connections for 2x2x2 cube
-    massVec[0].connect(3);
-    massVec[0].connect(6);
-    massVec[0].connect(5);
-
-    massVec[1].connect(2);
-    massVec[1].connect(4);
-    massVec[1].connect(7);
-
-
-    massVec[2].connect(1);
-    massVec[2].connect(4);
-    massVec[2].connect(7);
-
-
-    massVec[3].connect(0);
-    massVec[3].connect(6);
-    massVec[3].connect(5);
-
-
-    massVec[4].connect(2);
-    massVec[4].connect(7);
-    massVec[4].connect(1);
-
-
-    massVec[5].connect(3);
-    massVec[5].connect(6);
-    massVec[5].connect(0);
-
-
-    massVec[6].connect(5);
-    massVec[6].connect(0);
-    massVec[6].connect(3);
-
-    massVec[7].connect(4);
-    massVec[7].connect(2);
-    massVec[7].connect(1);
 
 
 }
@@ -160,26 +134,29 @@ void Cube::updateEuler(){
 // loop throw all masses and conections
     for (int i=0; i<massVec.size(); i++) {
 
+
+
         f = glm::vec3(0,0,0);
 
 
-        for (int j = 0; j < massVec[i].connections.size() ; ++j) {
+        //if (i != 0 && i != 9 ) {
+            for (int j = 0; j < massVec[i].connections.size(); ++j) {
 
-            int ni =  massVec[i].connections[j];
+                int ni = massVec[i].connections[j];
 
-            // Check if nan
-            if(massVec[i].getVelocity().x != massVec[i].getVelocity().x){
-                return;
+                // Check if nan
+                if (massVec[i].getVelocity().x != massVec[i].getVelocity().x) {
+                    return;
+                }
+
+                glm::vec3 force = calcForce(massVec[i], massVec[ni], i, ni);
+
+                f = f + force;
+
             }
 
-            glm::vec3 force = calcForce(massVec[i], massVec[ni], i, ni);
-
-            f = f + force;
-
-        }
-
-        forceVec.push_back(f);
-        std::cout << std::endl;
+            forceVec.push_back(f);
+        //}
 
     }
 
@@ -190,9 +167,11 @@ void Cube::updateEuler(){
             glm::vec3 vel1 = massVec[l].getVelocity() + dt * (forceVec[l]) / m;
             glm::vec3 pos1 = massVec[l].getPosition() + dt * vel1;
 
+
             // Set new mass 1 state
             massVec[l].setPosition(pos1);
             massVec[l].setVelocity(vel1);
+
 
 
     }
@@ -234,31 +213,22 @@ glm::vec3 Cube::calcForce(Mass m1, Mass m2, int m1Index, int m2Index) {
     double euclVel = glm::sqrt( glm::pow(v1.x - v2.x, 2) + glm::pow(v1.y - v2.y, 2) + glm::pow(v1.z - v2.z, 2) );
 
 
-    /*
-    //Use This if rest length shouldn't be changed
-    fspring = k * (euclDist - r);
-    fdamper = d * euclVel;
-     */
-    // and comment this -->
 
-    if(std::abs(m2Index - m1Index) != 1 && std::abs(m2Index - m1Index) != 2 && std::abs(m2Index - m1Index) != 4){
+    double x = std::pow(m1.getinitialPosition().x-m2.getinitialPosition().x, 2);
+    double y = std::pow(m1.getinitialPosition().y-m2.getinitialPosition().y, 2);
+    double z = std::pow(m1.getinitialPosition().z-m2.getinitialPosition().z, 2);
+
+    double distance  = std::sqrt(x+y+z) ;
+
+    //Use This if rest length shouldn't be changed
+    if(distance > di+di/10) {
         double r2 = std::sqrt(r*r*2);
         fspring = k * (euclDist - r2);
         fdamper = d * euclVel;
-    }
-    else{
-        // a check to change rest length of the diagonal connections that isn't very nice (but works) for 2x2x2 cubes
-        if (((m1Index == 2 || m2Index == 2) && (m1Index == 1 || m2Index == 1)) || ((m1Index == 6 || m2Index == 6) && (m1Index == 5 || m2Index == 5)) || ((m1Index == 2 || m2Index == 2) && (m1Index == 4 || m2Index == 4)) || ((m1Index == 5 || m2Index == 5) && (m1Index == 3 || m2Index == 3)) ){
-            double r2 = std::sqrt(r*r*2);
-            fspring = k * (euclDist - r2);
-            fdamper = d * euclVel;
-        }
-        else{
+    } else{
         fspring = k * (euclDist - r);
         fdamper = d * euclVel;
-        }
     }
-    // to here <--
 
 
 
@@ -375,4 +345,15 @@ void Cube::gravitys(bool b) {
         }
     }
 
+}
+
+double Cube::distance3D(Mass m1, Mass m2) {
+
+    double x = std::pow(m1.getPosition().x-m2.getPosition().x, 2);
+    double y = std::pow(m1.getPosition().y-m2.getPosition().y, 2);
+    double z = std::pow(m1.getPosition().z-m2.getPosition().z, 2);
+    
+    double distance  = std::sqrt(x+y+z) ;
+
+    return distance;
 }
