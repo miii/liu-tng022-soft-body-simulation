@@ -20,7 +20,7 @@
 #include <GLFW/glfw3.h>
 
 #ifdef __WIN32__
-#include <GL/glext.h>
+#include <GL/glext.dt>
 #endif
 
 #include "Functions.h"

@@ -12,50 +12,39 @@
 class Mass {
 
 private:
-    glm::vec3 pos = glm::vec3(0,0,0);;
-    glm::vec3 ppos;
+    // position of mass
+    glm::vec3 pos = glm::vec3(0,0,0);
+    // velocity of mass
     glm::vec3 velocity = glm::vec3(0,0,0);
-    glm::vec3 pvelocity;
 
 
 
 public:
-    glm::vec3 initialVelocity;
+    glm::vec3 initialVelocity; // initial Velocity
 
-    int xCon = -1;
-    int xCon2 = -1;
-    int yCon = -1;
-    int yCon2 = -1;
-    int zCon = -1;
-    int zCon2 = -1;
+
+    // all the connections for the mass
     std::vector<int> connections;
 
-    int xyzCon;
-
+    // constructor of Mass
     Mass(glm::vec3 _pos, glm::vec3 initVel);
 
 
+    // connects
     void connect(int massIndex);
 
+    // sets the position of the mass
     void setPosition(glm::vec3);
+
+    // gets the position of the mass
     glm::vec3 getPosition();
-    glm::vec3 getPreviousPosition();
-    void setPreviousPosition(glm::vec3 pos);
 
+    // sets the Velocity of the masses
     void setVelocity(glm::vec3 vel);
+
+    // gets the Velocity of the masses
     glm::vec3 getVelocity();
-    glm::vec3 getPreviousVelocity();
-    void setPreviousVelocity(glm::vec3 vel);
 
-    int getxCon();
-    int getyCon();
-    int getzCon();
-
-    int getxCon2();
-
-    int getzCon2();
-
-    int getyCon2();
 };
 
 

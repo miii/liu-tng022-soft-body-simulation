@@ -4,22 +4,27 @@
 
 #include "Mass.h"
 
+// gets the position of the mass
 glm::vec3 Mass::getPosition(){
     return pos;
 }
 
+// sets the position for the mass
 void Mass::setPosition(glm::vec3 _pos){
     pos=_pos;
 }
 
+// sets velocity for the cube
 void Mass::setVelocity(glm::vec3 vel){
     velocity=vel;
 }
 
+// gets the velocity of the cube
 glm::vec3 Mass::getVelocity(){
     return velocity;
 }
 
+// mass constructor
 Mass::Mass(glm::vec3 _pos, glm::vec3 initVel) {
     pos = _pos;
 
@@ -28,45 +33,7 @@ Mass::Mass(glm::vec3 _pos, glm::vec3 initVel) {
 
 }
 
-
-
-
-int Mass::getxCon() {
-    return xCon;
-}
-int Mass::getxCon2() {
-    return xCon2;
-}
-int Mass::getyCon2() {
-    return yCon2;
-}
-int Mass::getyCon() {
-    return yCon;
-}
-int Mass::getzCon() {
-    return zCon;
-}
-int Mass::getzCon2() {
-    return zCon2;
-}
-
-glm::vec3 Mass::getPreviousPosition() {
-    return ppos;
-}
-
-glm::vec3 Mass::getPreviousVelocity() {
-    return pvelocity;
-}
-
-void Mass::setPreviousPosition( glm::vec3 pos) {
-    ppos=pos;
-
-}
-
-void Mass::setPreviousVelocity(glm::vec3 vel) {
-    pvelocity=vel;
-}
-
+// connects mass
 void Mass::connect(int massIndex) {
     connections.push_back(massIndex);
 }

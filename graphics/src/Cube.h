@@ -16,19 +16,10 @@ class Cube {
 
 private:
 
-    //Spring values
-    float m = 2.0f;
-    float h = 0.00001f;
+    float m = 2.0f; // Mass
+    float dt = 0.0005f; // step length
 
-    glm::vec3 gravity=glm::vec3(0.0f, -9.82f, 0.0f);
-    glm::vec3 sXlenght = glm::vec3(0.9f, 0.0f,0.0f);
-    glm::vec3 sYlenght = glm::vec3(0.0f, 0.9f,0.0f);
-    glm::vec3 sZlenght = glm::vec3(0.0f, 0.0f,0.9f);
-    glm::vec3 sXYZlenght = glm::vec3(0.9f, 0.9f,0.9f);
-
-
-
-
+    glm::vec3 gravity = glm::vec3(0.0f, -9.82f, 0.0f); // gravity
 
 public:
 
@@ -38,17 +29,18 @@ public:
 
     Cube();
 
-    void setConstans(float _k, float _d, float _r);
+    void setConstants(float _k, float _d, float _r);
     std::vector<Mass> massVec;
-    glm::vec3 Fource[8];
 
-    void draw();
-    void updateEuler();
-    glm::vec3 getCenter();
+    void draw(); // draw the connections
+    void updateEuler(); // update masses
 
-    void generateCube(int x, int y, int z);
+    void generateCube(int x, int y, int z); // generates cube and connections
 
-    glm::vec3 calcForce(Mass m1, Mass m2);
+    glm::vec3 calcForce(Mass m1, Mass m2, int m1Index, int m2Index); // calculate force
+
+    void gravitys(bool b); // applies gravity if true
+
 };
 
 

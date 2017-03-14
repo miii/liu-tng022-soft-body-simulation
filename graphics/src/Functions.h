@@ -8,7 +8,7 @@
 
 namespace Functions {
 
-    double displayFPS(GLFWwindow *window);
+    double displayFPS(GLFWwindow *window); // display FPS
 };
 
 

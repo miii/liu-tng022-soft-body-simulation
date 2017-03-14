@@ -5,35 +5,20 @@
 #include <OpenGL/gl.h>
 #include<OpenGL/glu.h>
 #else
-    #include <GL/gl.h>
-    #include<GL/glu.h>
+    #include <GL/gl.dt>
+    #include<GL/glu.dt>
 #endif
 
 #include <GLFW/glfw3.h>
-#include <stdlib.h>
-#include <math.h>
 #include <iostream>
-#include <stdio.h>
 
 #include "Cube.h"
 #include "Functions.h"
 
 
 
-/* -- Global Variables -- */
-
-//float up = 0, down = 0, left = 0, right = 0;
-float transX=0, transY=0, transZ=0;
-
-
-
-
-
 /* - Function Declarations - */
-
-//void keyboard(unsigned char key, int x, int y);
 static void error_callback(int error, const char* description);
-//static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
 
 int main(void)
@@ -44,7 +29,7 @@ int main(void)
     GLFWwindow* window; // GLFW struct to hold information about the window
     glfwSetErrorCallback(error_callback);
 
-    double fps = 0.0f;  // FPS
+    double fps = 0.0f;  // FPS - Frames Per Secound
 
     // Initialise GLFW
     if (!glfwInit()) {
@@ -57,6 +42,7 @@ int main(void)
 
 
 
+    // Creats Window
     window = glfwCreateWindow(vidmode->width/2, vidmode->height/2, "Soft", NULL, NULL);
     if (!window)
     {
@@ -74,27 +60,25 @@ int main(void)
     printf("Desktop size:    %d x %d pixels\n", vidmode->width, vidmode->height);
 
     Cube cube1 = Cube();
-    //cube1.massVec[1].setPosition(glm::vec3(1.2f, -0.2f, 0.0f));
-    cube1.setConstans(200, 20 , 0.8);
-    //glClearColor(0.6, 0.9, 1.0, 1.0);
+    cube1.setConstants(80, 0.4, 1.2); // sets value
     glLoadIdentity();
 
 
-    //glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
+    glfwSwapInterval(1); // 0 or 1
 
-
-    glfwSwapInterval(0); // 0 or 1
 
 
 
     while (!glfwWindowShouldClose(window))
     {
+
+
+
         fps = Functions::displayFPS(window);
 
         // Set the clear color and depth, and clear the buffers for drawing
         glClearColor(0.6f, 0.9f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
         glEnable(GL_DEPTH_TEST); // Use the Z buffer
         glEnable(GL_CULL_FACE);  // Use back face culling
         glCullFace(GL_BACK);
@@ -102,10 +86,7 @@ int main(void)
 
         float ratio;
         int width, height;
-        unsigned int GridSizeX = 16;
-        unsigned int GridSizeY = 16;
-        unsigned int SizeX = 1;
-        unsigned int SizeY = 1;
+
 
         glfwGetFramebufferSize(window, &width, &height);
 
@@ -113,43 +94,34 @@ int main(void)
         ratio = width / (float) height;
 
         glViewport(0, 0, width, height);
-        //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
 
-        //glEnable(GL_CULL_FACE);
         glEnable(GL_NORMALIZE);
-        //glEnable(GL_DEPTH_TEST);
-        //glCullFace(GL_FRONT);
 
         glFrustum(-ratio, ratio, -1.0f, 1.0f, 1, 50);
-        gluLookAt(0.0f, 0.5f, 3.0f,
+
+        gluLookAt(1.0f, 2.0f, 3.0f,
                   0.0f, 0.0f, 0.0f,
                   0.0f, 1.0f, 0.0f);
 
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
 
-        //glCullFace(GL_FRONT);
-        //glLoadIdentity();
-
-
-
-
-
-
 
         /* ----------------------- Render code ---------------------------- */
 
-
-
-
-        //glPushMatrix();
-        glColor3f(1.0f, 0.5f, 0.5f);
         glPushMatrix();
-        cube1.draw();
-        cube1.updateEuler();
+
+        glColor3f(1.0f, 0.5f, 0.5f); // set background collor
+        glPushMatrix();
+        cube1.draw(); // Draw connections
+        cube1.updateEuler(); // Update masses
+        glPopMatrix();
+
+
+
 
 
 
@@ -172,6 +144,7 @@ int main(void)
 
     glfwDestroyWindow(window);
     glfwTerminate();
+
 
     return 0;
 }
