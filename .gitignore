@@ -73,3 +73,5 @@ build
 /*.gcno
 DerivedData/
 
+/graphics/.idea
+/graphics/cmake-build-debug
