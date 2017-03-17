@@ -17,18 +17,15 @@ class Cube {
 private:
 
     float m = 2.0f; // Mass
-    float dt = 0.001f; // step length
-
-    glm::vec3 gravity = glm::vec3(0.0f, -9.82f, 0.0f); // gravity
-
-    double di = 0.3; // Start distance between masses
+    float dt = 0.0001f; // step length
+    double di = 1.2; // Start distance between masses
 
 
 
 public:
 
-    float k; // Spring
-    float d; // Damper
+    float ks; // Spring
+    float kd; // Damper
     float r; // Rest length of spring
 
     Cube();
@@ -41,9 +38,7 @@ public:
 
     void generateCube(int x, int y, int z); // generates cube and connections
 
-    glm::vec3 calcForce(Mass m1, Mass m2, int m1Index, int m2Index); // calculate force
-
-    void gravitys(bool b); // applies gravity if true
+    glm::vec3 calcForce(Mass m1, Mass m2); // calculate force
 
     double distance3D(Mass m1, Mass m2);
 

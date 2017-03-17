@@ -9,14 +9,14 @@
 
 Cube::Cube(){
 
-    generateCube(4, 4, 4);
+    generateCube(2, 2, 2);
 
 }
 
 void Cube::generateCube(int x, int y, int z){
 
     int numMass = x*y*z;
-    int numXY = x*y;
+    //int numXY = x*y;
     std::cout << std::endl << "Number of Masses: " << numMass << std::endl;
     int xpos = 0;
     int ypos = 0;
@@ -47,10 +47,11 @@ void Cube::generateCube(int x, int y, int z){
 
     std::cout << std::endl << "Conections:" << std::endl;
 
+    // connects all the nearby masses
     for (int j = 0; j < massVec.size(); ++j) {
-        std::cout << "mass" << j << ": " ;
+        std::cout << "Mass " << j << ": " ;
         for (int i = 0; i < massVec.size() ; ++i) {
-            if(distance3D(massVec[j], massVec[i]) <= std::sqrt(di*di*2)+di/10 && j!= i){
+            if(distance3D(massVec[j], massVec[i]) <= std::sqrt(di*di*2) + di/10 && j!= i){
                 massVec[j].connect(i);
                 std::cout << i << ", ";
             }
@@ -59,61 +60,6 @@ void Cube::generateCube(int x, int y, int z){
 
 
     }
-/*
-    // creat connection in X, Y and Z if other conections are needed, creat them manually with mass.connect(int)
-        for (int j = 0; j < massVec.size(); ++j) {
-            std::cout << j << ": ";
-            if(x > 1) {
-            if ((j + 1) % x == 0) {
-                massVec[j].connections.push_back(j - 1);
-                std::cout << "x: " << j - 1 << ", ";
-            } else if (j % x == 0) {
-                massVec[j].connections.push_back(j + 1);
-                std::cout << "x: " << j + 1 << ", ";
-            } else {
-
-                massVec[j].connections.push_back(j - 1);
-                massVec[j].connections.push_back(j + 1);
-                std::cout << "X(" << j - 1 << ", ";
-                std::cout << j + 1 << "), ";
-            }
-        }
-
-
-if (y > 1) {
-    if (((j - numXY * (j / numXY)) / x) == 0) {
-        massVec[j].connections.push_back(j + x);
-        std::cout << j + x << ", ";
-    } else if (((j - numXY * (j / numXY)) / x) == y - 1) {
-        massVec[j].connections.push_back(j - x);
-        std::cout << j - x << ", " ;
-    } else {
-        massVec[j].connections.push_back(j - x);
-        massVec[j].connections.push_back(j + x);
-        std::cout << "y( " << j - x << ", " << j + x << "), " ;
-    }
-}
-        if (z > 1) {
-
-            if ((((j / numXY)) ) == 0) {
-                massVec[j].connections.push_back(j + numXY);
-                std::cout << j + numXY << " " << std::endl;
-
-            } else if (( (j / numXY))  == z - 1) {
-                massVec[j].connections.push_back(j - numXY);
-                std::cout <<j - numXY << ", " << std::endl;
-
-
-            } else {
-                massVec[j].connections.push_back(j - numXY);
-                massVec[j].connections.push_back(j + numXY);
-                std::cout << "z( " << j - numXY << ", " << j + numXY << ")" << std::endl;
-            }
-        }
-            std::cout << std::endl;
-
-        }
-*/
 
 
 
@@ -123,9 +69,7 @@ if (y > 1) {
 
 // Updates position and velocity of masses
 void Cube::updateEuler(){
-
-    gravitys(false);
-
+    
     std::vector<glm::vec3> forceVec;
     glm::vec3 f;
 
@@ -139,41 +83,56 @@ void Cube::updateEuler(){
         f = glm::vec3(0,0,0);
 
 
-        //if (i != 0 && i != 9 ) {
             for (int j = 0; j < massVec[i].connections.size(); ++j) {
 
-                int ni = massVec[i].connections[j];
+                int ni = massVec[i].connections[j]; // Get neighbor index
+
+                // If mass is given as neighbor with itself
+                if (ni == i){
+                    std::cout << "Mass cannot be connected with itself" << std::endl;
+                    return;
+                }
 
                 // Check if nan
                 if (massVec[i].getVelocity().x != massVec[i].getVelocity().x) {
                     return;
                 }
+                if (massVec[i].getVelocity().y != massVec[i].getVelocity().y) {
+                    return;
+                }
+                if (massVec[i].getVelocity().z != massVec[i].getVelocity().z) {
+                    return;
+                }
 
-                glm::vec3 force = calcForce(massVec[i], massVec[ni], i, ni);
+
+                glm::vec3 force = calcForce(massVec[i], massVec[ni]);
+
+
 
                 f = f + force;
+
+
+
 
             }
 
             forceVec.push_back(f);
-        //}
+
 
     }
 
     //updates all masses
     for (int l = 0; l < massVec.size() ; ++l) {
 
-            // Calculate new velocity
-            glm::vec3 vel1 = massVec[l].getVelocity() + dt * (forceVec[l]) / m;
-            glm::vec3 pos1 = massVec[l].getPosition() + dt * vel1;
+        // Calculate new velocity
+        glm::vec3 vel1 = massVec[l].getVelocity() + dt * (forceVec[l]) / m;
+        // Calculate new position
+        glm::vec3 pos1 = massVec[l].getPosition() + dt * vel1;
 
 
-            // Set new mass 1 state
-            massVec[l].setPosition(pos1);
-            massVec[l].setVelocity(vel1);
-
-
-
+        // set position and velocity
+        massVec[l].setPosition(pos1);
+        massVec[l].setVelocity(vel1);
     }
 
 
@@ -182,11 +141,14 @@ void Cube::updateEuler(){
 }
 
 // calculate the force that effects the mass
-glm::vec3 Cube::calcForce(Mass m1, Mass m2, int m1Index, int m2Index) {
+glm::vec3 Cube::calcForce(Mass m1, Mass m2) {
 
+
+    // Find position of mass 1 and mass 2
     glm::vec3 p1 = m1.getPosition();
     glm::vec3 p2 = m2.getPosition();
 
+    // Find velocity of mass 1 and mass 2
     glm::vec3 v1 = m1.getVelocity();
     glm::vec3 v2 = m2.getVelocity();
 
@@ -195,69 +157,86 @@ glm::vec3 Cube::calcForce(Mass m1, Mass m2, int m1Index, int m2Index) {
     double fspring, fdamper;
 
 
-    double dy = p2.y - p1.y;
+    // Find angle between p1 and p2
     double dx = p2.x - p1.x;
+    double dy = p2.y - p1.y;
     double dz = p2.z - p1.z;
+    double angleyx = std::atan(dy / dx);
+    double angleyz = std::atan(dy / dz);
 
 
+    // if angleyx || angleyz is nan
+    if(angleyx != angleyx) {
+        angleyx = 0;
+    }
+    if(angleyz != angleyz) {
+        angleyz = PI/2;
+    }
 
 
-    double angleyx = 0;
-    double angleyz = PI/2;
-    if (dx != 0)
-        angleyx = glm::atan(dy / dx);
-    if (dz != 0)
-        angleyz = glm::atan(dy / dz);
-
+    //Get euclidean distance and velocity of masses
     double euclDist = glm::sqrt( glm::pow(p1.x - p2.x, 2) + glm::pow(p1.y - p2.y, 2) + glm::pow(p1.z - p2.z, 2) );
     double euclVel = glm::sqrt( glm::pow(v1.x - v2.x, 2) + glm::pow(v1.y - v2.y, 2) + glm::pow(v1.z - v2.z, 2) );
+
 
 
 
     double x = std::pow(m1.getinitialPosition().x-m2.getinitialPosition().x, 2);
     double y = std::pow(m1.getinitialPosition().y-m2.getinitialPosition().y, 2);
     double z = std::pow(m1.getinitialPosition().z-m2.getinitialPosition().z, 2);
+    double distance = std::sqrt(x+y+z) ;
 
-    double distance  = std::sqrt(x+y+z) ;
 
-    //Use This if rest length shouldn't be changed
+    //  Spring force & Damper force. Damper force will be in the opposite direction of spring force
     if(distance > di+di/10) {
+        // diagonal connection
         double r2 = std::sqrt(r*r*2);
-        fspring = k * (euclDist - r2);
-        fdamper = d * euclVel;
+        fspring = ks * (euclDist - r2);
+        fdamper = kd * euclVel;
     } else{
-        fspring = k * (euclDist - r);
-        fdamper = d * euclVel;
+        fspring = ks * (euclDist - r);
+        fdamper = kd * euclVel;
     }
 
 
 
-
+    // Find direction of damper force
     glm::vec3 dir = glm::vec3(0, 0, 0);
+    dir.x = (v2.x - v1.x) / glm::abs(v2.x - v1.x);
+    dir.y = (v2.y - v1.y) / glm::abs(v2.y - v1.y);
+    dir.z = (v2.z - v1.z) / glm::abs(v2.z - v1.z);
 
-    if ((v2.x - v1.x) != 0)
-        dir.x = (v2.x - v1.x) / std::abs(v2.x - v1.x);
+    // If division by zero above
+    if(dir.x != dir.x){
+        dir.x = 0;
+    }
+    if(dir.y != dir.y){
+        dir.y = 0;
+    }
+    if(dir.z != dir.z){
+        dir.z = 0;
+    }
 
-    if ((v2.y - v1.y) != 0)
-        dir.y = (v2.y - v1.y) / std::abs(v2.y - v1.y);
-
-    if ((v2.z - v1.z) != 0)
-        dir.z = (v2.z - v1.z) / std::abs(v2.z - v1.z);
-
+    // For proper angles since atan will not take direction into consideration
     if (dx < 0)
         angleyx = angleyx + PI;
     if (dz <0)
         angleyz = angleyz + PI;
 
 
-    double hypyx = glm::sqrt(glm::pow(dx,2)+glm::pow(dy,2));
-    double hypyz = glm::sqrt(glm::pow(dz,2)+glm::pow(dy,2));
+    double hypyx = glm::sqrt(glm::pow(glm::abs(dx),2)+glm::pow(glm::abs(dy),2));
+    double hypyz = glm::sqrt(glm::pow(glm::abs(dz),2)+glm::pow(glm::abs(dy),2));
 
 
+    double cosyx = glm::cos(angleyx);
+    double sinyx = glm::sin(angleyx);
+    double cosyz = glm::cos(angleyz);
+
+    //Calculate force
     glm::vec3 force = glm::vec3(0, 0, 0);
-    force.x = (float) (fspring * hypyx * glm::cos(angleyx) + fdamper * dir.x);
-    force.y = (float) (fspring * hypyx * glm::sin(angleyx) + fdamper * dir.y);
-    force.z = (float) (fspring * hypyz * glm::cos(angleyz) + fdamper * dir.z);
+    force.x = (float) (hypyx * (fspring * cosyx + fdamper * dir.x));
+    force.y = (float) (hypyx * (fspring * sinyx + fdamper * dir.y));
+    force.z = (float) (hypyz * (fspring * cosyz + fdamper * dir.z));
 
     return force;
 
@@ -326,24 +305,9 @@ void Cube::draw()
 
 // sets constants of cube
 void Cube::setConstants(float _k, float _d, float _r) {
-    k = _k;
-    d = _d;
+    ks = _k;
+    kd = _d;
     r = _r;
-
-}
-
-// function to activate gravity
-void Cube::gravitys(bool b) {
-
-    if(b){
-        for (int i = 0; i < massVec.size() ; ++i) {
-            glm::vec3 vel1 = glm::vec3(0,0,0);
-            vel1.y = massVec[i].getVelocity().y + dt * gravity.y;
-            glm::vec3 pos1 = massVec[i].getPosition() + dt * vel1;
-            massVec[i].setVelocity(vel1);
-
-        }
-    }
 
 }
 

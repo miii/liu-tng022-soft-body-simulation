@@ -60,18 +60,18 @@ int main(void)
     printf("Desktop size:    %d x %d pixels\n", vidmode->width, vidmode->height);
 
     Cube cube1 = Cube();
-    cube1.setConstants(100, 2, 0.5); // sets value
+    cube1.setConstants(400, 2, 1.0); // sets value: spring, damper, rest length
     glLoadIdentity();
 
 
-    glfwSwapInterval(1); // 0 or 1
+    glfwSwapInterval(0); // 0 or 1
+
 
 
 
 
     while (!glfwWindowShouldClose(window))
     {
-
 
 
         fps = Functions::displayFPS(window);
@@ -102,7 +102,7 @@ int main(void)
 
         glFrustum(-ratio, ratio, -1.0f, 1.0f, 1, 50);
 
-        gluLookAt(3.0f, 1.0f, 4.0f,
+        gluLookAt(3.0f, 3.0f, -3.0f,
                   0.0f, 0.0f, 0.0f,
                   0.0f, 1.0f, 0.0f);
 
@@ -114,12 +114,17 @@ int main(void)
 
         glPushMatrix();
 
-        glColor3f(1.0f, 0.5f, 0.5f); // set background collor
-        glPushMatrix();
-        cube1.draw(); // Draw connections
-        cube1.updateEuler(); // Update masses
-        glPopMatrix();
+        glColor3f(1.0f, 0.5f, 0.5f); // set cube collor
 
+
+
+            glPushMatrix();
+            cube1.draw(); // Draw connections
+            cube1.updateEuler(); // Update masses
+
+            cube1.draw(); // Draw connections
+
+        glPopMatrix();
 
 
 
