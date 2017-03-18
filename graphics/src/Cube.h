@@ -19,8 +19,7 @@ private:
     float m = 2.0f; // Mass
     float dt = 0.0001f; // step length
     double di = 1.2; // Start distance between masses
-
-
+    bool gravity = false;
 
 public:
 

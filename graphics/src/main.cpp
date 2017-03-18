@@ -31,7 +31,7 @@ int main(void)
 
     double fps = 0.0f;  // FPS - Frames Per Secound
 
-    // Initialise GLFW
+    // Initialize GLFW
     if (!glfwInit()) {
         exit(EXIT_FAILURE);
     }
@@ -42,7 +42,7 @@ int main(void)
 
 
 
-    // Creats Window
+    // Creates Window
     window = glfwCreateWindow(vidmode->width/2, vidmode->height/2, "Soft", NULL, NULL);
     if (!window)
     {

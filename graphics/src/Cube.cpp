@@ -9,7 +9,7 @@
 
 Cube::Cube(){
 
-    generateCube(2, 2, 2);
+    generateCube(3, 3, 3);
 
 }
 
@@ -80,7 +80,11 @@ void Cube::updateEuler(){
 
 
 
-        f = glm::vec3(0,0,0);
+        if(gravity == true) {
+            f = glm::vec3(0, -9.82, 0);
+        } else {
+            f = glm::vec3(0, 0, 0);
+        }
 
 
             for (int j = 0; j < massVec[i].connections.size(); ++j) {
